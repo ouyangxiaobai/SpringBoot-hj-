@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+    <div th:replace="home/module/_header"></div>
+    <link rel="stylesheet" href="/static/front/css/pay.css">
+
+    <div class="mod-ct" style="margin-top: 100px;">
+        <input type="hidden" id="orderId" th:value="${order.id}">
+        <div class="order">
+            [[${order.post.postTitle}]]
+        </div>
+        <div class="amount" id="money">
+            ￥<th:block th:text="${order.totalAmount+order.deposit}"></th:block>
+        </div>
+        <div class="qrcode-img-wrapper" data-role="qrPayImgWrapper">
+            <div data-role="qrPayImg" class="qrcode-img-area">
+                <div class="ui-loading qrcode-loading" data-role="qrPayImgLoading"></div>
+                <div style="position: relative;display: inline-block;">
+                    <img width="300" height="300"
+                         src="/static/images/alipay_qrcode.png"
+                         title="请尽快支付~"
+                         style="display: block;">
+                </div>
+            </div>
+        </div>
+
+        <div class="time-item" style="padding-top: 10px">
+            <div class="time-item" id="msg">
+                <h1>支付完成后，将跳转订单列表页面</h1>
+            </div>
+        </div>
+
+        <div class="tip">
+            <div class="ico-scan-ali"></div>
+            <div class="tip-text">
+                <p id="showtext">打开支付宝 [扫一扫]</p>
+            </div>
+            <div class="tip-text">
+                <button id="btn-pay" class="btn btn-small btn-success" style="color:#ffffff;" title="支付成功">模拟支付成功</button>
+            </div>
+        </div>
+
+        <div class="tip-text">
+        </div>
+
+    </div>
+    <div class="foot" style="margin-bottom: 50px;"></div>
+
+
+    <!-- End Property Single Slider -->
+    <div th:replace="home/module/_footer"></div>

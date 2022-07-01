@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+    <div th:replace="home/module/_header"></div>
+
+    <!-- Property Single Slider header -->
+    <section class="site-slider">
+        <div id="siteslider" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#siteslider" data-slide-to="0" class="active"></li>
+                <li data-target="#siteslider" data-slide-to="1"></li>
+            </ol>
+            <div class="carousel-inner" role="listbox">
+                <div class="carousel-item active" style="background-image: url('/static/front/img/slider/1.jpg')"></div>
+                <div class="carousel-item" style="background-image: url('/static/front/img/slider/2.jpg')"></div>
+            </div>
+            <a class="carousel-control-prev" href="#siteslider" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#siteslider" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+        <div class="property-single-title property-single-title-gallery">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-8">
+                        <h2>[[${post.city.cityName}]]-[[${post.postTitle}]]</h2>
+                        <h6><i class="mdi mdi-home-map-marker"></i>
+                            [[${post.number}]] ([[${post.category.cateName}]]) · <span th:text="${post.agencyFlag ? '中介发布' : '房东发布'}"></span>
+                        </h6>
+                        <a th:if="${allowEdit}" th:href="@{'/admin/post/edit?id='+${post.id}}" target="_blank">编辑</a>
+                    </div>
+                    <div class="col-lg-4 col-md-4 text-right">
+                        <h6 class="mt-2">
+                            <span th:if="${post.postStatus == 0}">未租出</span>
+                            <span th:if="${post.postStatus == 1}">已租出</span>
+
+                        </h6>
+                        <h2 class="text-success">¥ [[${post.dayPrice}]] <small>/日</small> = ¥ [[${post.monthPrice}]] <small>/月</small></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Property Single Slider header -->
+    <!-- Property Single Slider -->
+    <section class="section-padding" style="padding: 50px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-8">
+                    <div class="card">
+                        <div class="card-body site-slider pl-0 pr-0 pt-0 pb-0">
+                            <div id="sitesliderz" class="carousel slide" data-ride="carousel">
+                                <ol class="carousel-indicators">
+                                    <li data-target="#sitesliderz" th:each="url, status : ${imgUrlList}"
+                                        th:classappend="${status.first?'active':''}"
+                                        th:data-slide-to="${status.index}"></li>
+                                </ol>
+                                <div class="carousel-inner" role="listbox">
+                                    <div class="carousel-item rounded" th:classappend="${status.first?'active':''}"
+                                         th:each="url, status : ${imgUrlList}"
+                                         th:style="${'background-image: url('+url+')'}"></div>
+                                </div>
+                                <a class="carousel-control-prev" href="#sitesliderz" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#sitesliderz" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4">
+                            <div class="list-icon">
+                                <i class="mdi mdi-sofa"></i>
+                                <strong>卧室:</strong>
+                                <p class="mb-0">[[${post.roomCount}]] 个</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                            <div class="list-icon">
+                                <i class="mdi mdi-scale-bathroom"></i>
+                                <strong>洗手间:</strong>
+                                <p class="mb-0">[[${post.toiletCount}]] 个</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                            <div class="list-icon">
+                                <i class="mdi mdi-move-resize-variant"></i>
+                                <strong>面积:</strong>
+                                <p class="mb-0">[[${post.area}]] m²</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card padding-card" th:if="${post.category.cateName == '合租'}">
+                        <div class="card-body">
+                            <h5 class="card-title mb-3">合租室友情况</h5>
+                            <div>
+                                <p th:each="order : ${orderList}">
+                                    <a th:href="${'/post/'+order.post.id}" target="_blank">[[${order.post.number}]] </a>-
+                                    <span th:if="${order.user == null}">暂未租出</span>
+                                    <span th:if="${order.user != null}"><a th:href="${'/admin/user/info?userId='+order.user.id}" target="_blank">[[${order.user.userDisplayName}]]</a></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card padding-card">
+                        <div class="card-body">
+                            <h5 class="card-title mb-3">详细介绍</h5>
+                            <div th:utext="${post.postContent}"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <div class="card sidebar-card">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4"><span th:text="${post.agencyFlag ? '中介' : '房东'}"></span></h5>
+                            <div id="featured-properties">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <div class="card card-list">
+                                            <a href="#">
+                                                <img class="card-img-top" th:src="${post.user.userAvatar}"
+                                                     alt="Card image cap">
+                                                <div class="card-body pb-0">
+                                                    <h5 class="card-title mb-4">[[${post.user.userDisplayName}]]</h5>
+                                                    <h6 class="card-subtitle mb-3 text-muted"><i
+                                                            class="mdi mdi-phone"></i>[[${post.user.phone}]]</h6>
+                                                    <h6 class="card-subtitle mb-3 text-muted"><i
+                                                            class="mdi mdi-email"></i>[[${post.user.email}]]</h6>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card sidebar-card">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4">立即租房</h5>
+                            <form name="sentMessage" method="post">
+                                <div class="control-group form-group">
+                                    <div class="controls">
+                                        <input type="hidden" id="postId" th:value="${post.id}">
+                                        <label>请选择退租日期 <span class="text-danger">*</span></label>
+                                        <input type="date" class="form-control" id="endDate">
+                                    </div>
+                                </div>
+                                <button th:if="${post.postStatus == 0}" type="button" id="btn-addOrder"
+                                        class="btn btn-success btn-block">预定
+                                </button>
+                                <button th:if="${post.postStatus == 1}" type="button" class="btn btn-danger btn-block">
+                                    已租出，暂时无法预定
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Property Single Slider -->
+    <div th:replace="home/module/_footer"></div>

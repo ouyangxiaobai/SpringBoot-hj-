@@ -1,0 +1,240 @@
+﻿<!doctype html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+    <div th:replace="home/module/_header"></div>
+
+
+    <!-- Main Slider With Form -->
+    <section class="site-slider">
+        <div id="siteslider" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#siteslider" data-slide-to="0" class="active"></li>
+                <li data-target="#siteslider" data-slide-to="1"></li>
+            </ol>
+            <div class="carousel-inner" role="listbox">
+                <div class="carousel-item active" style="background-image: url('/static/front/img/slider/1.jpg')">
+                    <div class="overlay"></div>
+                </div>
+                <div class="carousel-item" style="background-image: url('/static/front/img/slider/2.jpg')">
+                    <div class="overlay"></div>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#siteslider" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#siteslider" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+        <div class="slider-form">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h6 class="subtitle mb-1 mt-0 text-shadow text-dark">发现租房市场上的最佳报价。
+                    </h6>
+                    <h1 class="display-4 mt-0 font-weight-bold text-shadow">让我们带你回家吧
+
+                    </h1>
+                </div>
+                <form method="GET" action="/post">
+
+                    <div class="row no-gutters">
+                        <div class="col-md-2">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="mdi mdi-map-marker-multiple"></i></div>
+                                <input class="form-control" name="postTitle" placeholder="请输入关键字"
+                                       th:value="${postTitle}" type="text">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="mdi mdi-google-maps"></i></div>
+                                <select class="form-control select2 no-radius" name="cityId">
+                                    <option value="">城市</option>
+                                    <option th:value="${city.id}" th:each="city : ${cityList}"
+                                            th:selected="${cityId == city.id}">[[${city.cityName}]]
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="mdi mdi-security-home"></i></div>
+                                <select class="form-control select2 no-radius" name="cateId">
+                                    <option value="">户型</option>
+                                    <option th:value="${category.id}" th:each="category : ${categoryList}"
+                                            th:selected="${cateId == category.id}">
+                                        [[${category.cateName}]]
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="mdi mdi-security-home"></i></div>
+                                <select class="form-control select2 no-radius" name="area">
+                                    <option value="">面积</option>
+                                    <option value="0-20" th:selected="${area == '0-20'}">20m²以下</option>
+                                    <option value="20-40" th:selected="${area == '20-40'}">20-40m²</option>
+                                    <option value="40-60" th:selected="${area == '40-60'}">40-60m²</option>
+                                    <option value="60-80" th:selected="${area == '60-80'}">60-80m²</option>
+                                    <option value="80-100" th:selected="${area == '80-100'}">80-100m²</option>
+                                    <option value="100-200" th:selected="${area == '100-200'}">100-200m²</option>
+                                    <option value="200-10000" th:selected="${area == '200-10000'}"> 200²以上</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="mdi mdi-security-home"></i></div>
+                                <select class="form-control select2 no-radius" name="price">
+                                    <option value="">价格</option>
+                                    <option value="0-1000">1000元/月以下</option>
+                                    <option value="1000-2000" th:selected="${price == '1000-2000'}">1000元-2000元/月</option>
+                                    <option value="2000-3000" th:selected="${price == '2000-3000'}">2000元-3000元/月</option>
+                                    <option value="3000-4000" th:selected="${price == '3000-4000'}">3000元-4000元/月</option>
+                                    <option value="4000-5000" th:selected="${price == '4000-5000'}">4000元-5000元/月</option>
+                                    <option value="5000-6000" th:selected="${price == '5000-6000'}">5000元-6000元/月</option>
+                                    <option value="6000-7000" th:selected="${price == '6000-7000'}">6000元-7000元/月</option>
+                                    <option value="7000-8000" th:selected="${price == '7000-8000'}">7000元-8000元/月</option>
+                                    <option value="8000-9000" th:selected="${price == '8000-9000'}">8000元-9000元/月</option>
+                                    <option value="9000-10000" th:selected="${price == '9000-10000'}">9000元-10000元/月</option>
+                                    <option value="10000-1000000" th:selected="${price == '10000-1000000'}">10000元/月以上</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-success btn-block no-radius font-weight-bold">SEARCH
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- End Main Slider With Form -->
+    <!-- Properties List -->
+    <section class="section-padding"  style="padding: 50px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title mb-3">房屋类型</h5>
+                            <ul class="sidebar-card-list">
+                                <li th:classappend="${cateId == -1 ? 'active' : ''}">
+                                    <a th:href="'?page='+${page.current-1}+'&postTitle='+${postTitle}+'&cityId='+${cityId}+'&cateId=-1&status='+${status}">
+                                        不限
+                                        <span class="sidebar-badge">[[${postCount}]]</span></a>
+                                </li>
+                                <li th:classappend="${cateId == category.id ? 'active' : ''}"
+                                    th:each="category : ${categoryList}">
+                                    <a th:href="'?page='+${page.current-1}+'&postTitle='+${postTitle}+'&cityId='+${cityId}+'&cateId='+${category.id}+'&status='+${status}">
+                                        [[${category.cateName}]]
+                                        <span class="sidebar-badge">[[${category.count}]]</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title mb-3">房屋状态</h5>
+                            <ul class="sidebar-card-list">
+                                <li th:classappend="${status == -1 ? 'active' : ''}"><a
+                                        th:href="'?page='+${page.current-1}+'&postTitle='+${postTitle}+'&cityId='+${cityId}+'&cateId='+${cateId}+'&status=-1'">
+                                    不限 <span
+                                        class="sidebar-badge">[[${postCount}]]</span></a></li>
+                                <li th:classappend="${status == 0 ? 'active' : ''}"><a
+                                        th:href="'?page='+${page.current-1}+'&postTitle='+${postTitle}+'&cityId='+${cityId}+'&cateId='+${cateId}+'&status=0'">
+                                    未租出 <span
+                                        class="sidebar-badge">[[${onCount}]]</span></a></li>
+                                <li th:classappend="${status == 1 ? 'active' : ''}"><a
+                                        th:href="'?page='+${page.current-1}+'&postTitle='+${postTitle}+'&cityId='+${cityId}+'&cateId='+${cateId}+'&status=1'">已租出
+                                    <span
+                                            class="sidebar-badge">[[${offCount}]]</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title mb-3">城市列表</h5>
+                            <ul class="sidebar-card-list">
+                                <li th:classappend="${cityId == -1 ? 'active' : ''}">
+                                    <a th:href="'?page='+${page.current-1}+'&postTitle='+${postTitle}+'&cityId=-1&cateId='+${cateId}+'&status='+${status}">不限
+                                        <span class="sidebar-badge">[[${postCount}]]</span>
+                                    </a>
+                                </li>
+                                <li th:classappend="${cityId == city.id ? 'active' : ''}" th:each="city : ${cityList}">
+                                    <a th:href="'?page='+${page.current-1}+'&postTitle='+${postTitle}+'&cityId='+${city.id}+'&cateId='+${cateId}+'&status='+${status}">[[${city.cityName}]]
+                                        <span class="sidebar-badge">[[${city.count}]]</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-9">
+
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6" th:each="post : ${page.records}">
+                            <div class="card card-list">
+                                <a th:href="@{'/post/'+${post.id}}">
+                                    <span class="badge badge-success" th:if="${post.postStatus == 0}">未租出</span>
+                                    <span class="badge badge-secondary" th:if="${post.postStatus == 1}">已租出</span>
+
+                                    <img class="card-img-top" th:src="${post.postThumbnail}">
+                                    <div class="card-body">
+                                        <h5 class="card-title">[[${post.postTitle}]]</h5>
+                                        <h6 class="card-subtitle mb-2 text-muted"><i
+                                                class="mdi mdi-home-map-marker"></i> [[${post.city.cityName}]] · <span th:text="${post.agencyFlag ? '中介发布' : '房东发布'}"></span>
+                                        </h6>
+                                        <h2 class="text-success mb-0 mt-3">
+                                            ¥ [[${post.monthPrice}]] <small>/月</small>
+                                        </h2>
+                                    </div>
+                                    <div class="card-footer">
+                                        <span><i
+                                                class="mdi mdi-sofa"></i> 卧室 : <strong>[[${post.roomCount}]]</strong></span>
+                                        <span><i class="mdi mdi-scale-bathroom"></i> 洗手间 : <strong>[[${post.toiletCount}]]</strong></span>
+                                        <span><i class="mdi mdi-move-resize-variant"></i> 面积 : <strong>[[${post.area}]] m²</strong></span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <nav class="mt-5">
+
+                        <ul class="pagination justify-content-center" th:if="${page.total > 0}">
+                            <li class="page-item" th:if="${page.hasPrevious()}">
+                                <a class="page-link" tabindex="-1"
+                                   th:href="'?page='+${page.current-1}+'&postTitle='+${postTitle}+'&cityId='+${cityId}+'&cateId='+${cateId}+'&status='+${status}">
+                                    <i class="mdi mdi-chevron-left"></i>
+                                </a>
+                            </li>
+                            <li class="page-item" th:classappend="${page.current == i ? 'active' : ''}"
+                                th:each="i: ${#numbers.sequence(1, page.pages)}">
+                                <a class="page-link"
+                                   th:href="'?page='+${i}+'&postTitle='+${postTitle}+'&cityId='+${cityId}+'&cateId='+${cateId}+'&status='+${status}">[[${i}]]</a>
+                            </li>
+                            <li class="page-item" th:if="${page.hasNext()}">
+                                <a class="page-link"
+                                   th:href="'?page='+${page.current+1}+'&postTitle='+${postTitle}+'&cityId='+${cityId}+'&cateId='+${cateId}+'&status='+${status}">
+                                    <i class="mdi mdi-chevron-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                        <div th:if="${page.total == 0}">
+                            暂无数据
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Properties List -->
+
+
+    <div th:replace="home/module/_footer"></div>

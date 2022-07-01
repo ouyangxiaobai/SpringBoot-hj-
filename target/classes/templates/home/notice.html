@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+    <div th:replace="home/module/_header"></div>
+
+    <!-- Property Single Slider header -->
+    <section class="section-padding bg-dark inner-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h1 class="mt-0 mb-3 text-white">新闻公告内容</h1>
+                    <div class="breadcrumbs">
+                        <p class="mb-0 text-white"><a class="text-white" href="/">首页</a> / <span class="text-success">新闻公告内容</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Property Single Slider header -->
+
+    <section class="section-padding"  style="padding: 50px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    <div class="card blog-card padding-card">
+                        <div class="card-body">
+                            <h2 th:text="${notice.title}"></h2>
+                            <h6 class="mb-3"><i class="mdi mdi-calendar-text"></i>
+                                <span th:text="${#dates.format(notice.createTime,'yyyy-MM-dd HH:mm:ss')}"></span></h6>
+                            <div th:utext="${notice.content}"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Property Single Slider -->
+
+    <!-- End Property Single Slider -->
+    <div th:replace="home/module/_footer"></div>

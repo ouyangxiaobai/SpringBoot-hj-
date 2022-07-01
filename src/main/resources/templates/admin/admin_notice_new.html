@@ -1,0 +1,126 @@
+<div th:replace="admin/module/_header"></div>
+<div class="wrapper">
+    <!-- 菜单栏模块 -->
+    <div th:replace="admin/module/_sidebar"></div>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+
+        <style type="text/css">
+            #cateId option {
+                border-radius: 0;
+            }
+
+            .form-horizontal .control-label {
+                text-align: left;
+            }
+
+            .editor-preview-active img, .editor-preview-active-side img {
+                width: 100%;
+            }
+
+            .fr-toolbar {
+                border-top: 1px solid #ccc !important;
+            }
+
+            .fr-wrapper > div[style*='z-index: 9999'] {
+                position: absolute;
+                top: -10000px;
+                opacity: 0;
+                height: 0;
+            }
+
+            .fr-view img.fr-dib {
+                margin: 5px !important;
+                width: 400px !important;
+                height: 200px !important;
+            }
+        </style>
+        <section class="content-header">
+            <h1 style="display: inline-block;">新闻公告发布</h1>
+            <ol class="breadcrumb">
+                <li>
+                    <a data-pjax="true" href="#"><i
+                            class="fa fa-dashboard"></i> 首页</a>
+                </li>
+                <li>
+                    <a data-pjax="true" href="#">新闻公告管理</a>
+                </li>
+                <li class="active">新闻公告发布</li>
+            </ol>
+        </section>
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="box box-primary">
+                        <!-- form start -->
+
+                        <div class="box-body">
+
+                            <div class="form-group">
+                                <label for="title">标题</label>
+                                <input type="text" class="form-control input-lg col-md-3" id="title"
+                                       placeholder="标题">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="content">内容</label>
+                                <div class="form-group" id='content'></div>
+                            </div>
+
+
+                        </div>
+                        <!-- /.box-body -->
+
+                        <div class="box-footer">
+                            <button type="button" class="btn btn-primary" onclick="saveNotice()">发布</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        <script>
+
+            //页面加载完成后再执行
+            $(function () {
+                $('#content').froalaEditor({
+                    heightMin: 500,
+                    heightMax: 1000,
+                    placeholderText: '',
+                    pastePlain: true,
+                    theme: 'gray',
+                    fontFamilySelection: true,
+                    fontSizeSelection: true,
+                    paragraphFormatSelection: true,
+                    toolbarButtons: ['paragraphFormat', 'bold', 'italic', 'underline', 'strikeThrough', 'quote', 'insertLink', 'emoticons', 'insertImage', 'insertVideo', 'embedly', 'insertFile', 'insertTable',
+                        'align', 'formatOL', 'formatUL', 'fullscreen'],
+                    imageAllowedTypes: ['jpg', 'gif', 'png', 'jpeg', 'svg', 'psd'],
+                    imageDefaultWidth: 100,
+                    imageInsertButtons: ['imageBack', '|', 'imageUpload', 'imageByURL'],
+                    imageUploadURL: '/admin/file/upload',
+                    imageManagerLoadURL: '/admin/file/upload',
+                    imageManagerLoadMethod: "GET",
+                    imageManagerPageSize: 4,
+                    imageManagerScrollOffset: 20,
+                    fileUploadURL: '/admin/file/upload',
+                    videoUploadURL: '/admin/file/upload',
+                    imagePaste: true,
+                    imageMove: true,
+                    pastePlain: true,
+                    fileMaxSize: 1024 * 1024 * 2000,
+                    toolbarStickyOffset: 50,
+                    tableResizer: true,
+                    language: 'zh_cn'
+                });
+
+            });
+
+
+
+        </script>
+    </div>
+
+</div>
+<div th:replace="admin/module/_footer"></div>

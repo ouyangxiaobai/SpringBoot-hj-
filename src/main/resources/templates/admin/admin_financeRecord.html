@@ -1,0 +1,132 @@
+<div th:replace="admin/module/_header"></div>
+
+<div class="wrapper">
+    <div th:replace="admin/module/_sidebar"></div>
+    <div class="content-wrapper">
+        <style type="text/css" rel="stylesheet">
+            .role-ul > li {
+                list-style: none;
+                float: left;
+                margin: 0;
+                padding-bottom: 10px
+            }
+        </style>
+        <section class="content-header">
+            <h1 style="display: inline-block;">收支明细</h1>
+            <ol class="breadcrumb">
+                <li>
+                    <a data-pjax="true" href="/admin">
+                        <i class="fa fa-dashboard"></i> 首页</a>
+                </li>
+                <li><a data-pjax="true" href="#">收支明细</a></li>
+                <li class="active">收支明细</li>
+            </ol>
+        </section>
+        <section class="content container-fluid">
+            <div class="row">
+                <div class="col-xs-6">
+
+                </div>
+                <div class="col-xs-6">
+                    <div class="md" style="margin-bottom: 10px; text-align:right;padding-left: 0; padding-right: 0;">
+                        <form class="form-inline" action="/admin/financeRecord">
+                            <div class="form-group">
+                                <input type="date" class="form-control"  title="开始日期" name="startDate" th:value="${startDate}" placeholder="开始日期">
+                            </div>
+                            <div class="form-group">
+                                <input type="date" class="form-control"  title="结束日期" name="endDate" th:value="${endDate}" placeholder="结束日期">
+                            </div>
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> 搜索</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="box box-primary">
+                        <div class="box-body table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th class="col-md-2">用户</th>
+                                    <th class="col-md-2">类型</th>
+                                    <th class="col-md-2">金额</th>
+                                    <th class="col-md-4">备注</th>
+                                    <th class="col-md-2">时间</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="financeRecord : ${financeRecords}" th:id="'financeRecord-'+${financeRecord.id}">
+                                    <td>
+                                        <a th:href="'/admin/user/info?userId='+${financeRecord.userId}">
+                                            [[${financeRecord.user.userDisplayName}]]
+                                        </a>
+                                    </td>
+                                    <td>[[${financeRecord.type}]]</td>
+                                    <td>[[${financeRecord.money}]]</td>
+                                    <td>[[${financeRecord.content}]]</td>
+                                    <td th:text="${#dates.format(financeRecord.createTime,'yyyy-MM-dd HH:mm')}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="box-footer clearfix">
+                            <div class="no-margin pull-left">
+                                第 [[${pageInfo.current}]] / [[${pageInfo.pages}]] 页
+                            </div>
+                            <ul class="pagination no-margin pull-right">
+                                <li><a data-pjax="true"  th:classappend="${pageInfo.current == 1 ? 'disabled' : ''}" class="btn btn-sm"
+                                       th:href="'/admin/financeRecord?startDate='+${startDate}+'&endDate='+${endDate}">
+                                    首页
+                                </a>
+                                </li>
+                                <li><a data-pjax="true" class="btn btn-sm"  th:classappend="${pageInfo.current == 1 ? 'disabled' : ''}"
+                                       th:href="'/admin/financeRecord?startDate='+${startDate}+'&endDate='+${endDate}+'&page='+${pageInfo.current-1}">
+                                    上一页
+                                </a>
+                                </li>
+                                <li><a data-pjax="true" class="btn btn-sm"  th:classappend="${pageInfo.current == pageInfo.pages ? 'disabled' : ''}"
+                                       th:href="'/admin/financeRecord?startDate='+${startDate}+'&endDate='+${endDate}+'&page='+${pageInfo.current+1}">
+                                    下一页
+                                </a>
+                                </li>
+                                <li><a data-pjax="true" class="btn btn-sm" th:classappend="${pageInfo.current == pageInfo.pages ? 'disabled' : ''}"
+                                       th:href="'/admin/financeRecord?startDate='+${startDate}+'&endDate='+${endDate}+'&page='+${pageInfo.pages}">
+                                    尾页
+                                </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <script>
+
+            function removeIt(id) {
+                layer.confirm("你确定是否删除？", function (index) {
+                    $.ajax({
+                        type: 'DELETE',
+                        url: '/admin/place/delete',
+                        async: false,
+                        data: {
+                            'id': id
+                        },
+                        success: function (data) {
+                            if (data.code == 0) {
+                                showMsg(data.msg, "error", 1000);
+                            } else {
+                                showMsg(data.msg, "success", 2000);
+                                $('#place-' + id).remove();
+                            }
+
+                        }
+                    });
+                    layer.close(index);
+                });
+            }
+
+
+        </script>
+    </div>
+</div>
+<div th:replace="admin/module/_footer"></div>
+

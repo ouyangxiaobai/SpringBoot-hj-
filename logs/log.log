@@ -1,0 +1,35 @@
+2022-02-25 14:09:07.537  INFO 15744 --- [restartedMain] com.example.sens.Application             : Starting Application on DESKTOP-GQBECKU with PID 15744 (started by Zz in D:\共享文件\code space\SpringBoot海景房出租管理系统\manland)
+2022-02-25 14:09:07.542  INFO 15744 --- [restartedMain] com.example.sens.Application             : No active profile set, falling back to default profiles: default
+2022-02-25 14:09:07.575  INFO 15744 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-02-25 14:09:07.576  INFO 15744 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-02-25 14:09:08.305  INFO 15744 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$77372834] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-02-25 14:09:08.330  INFO 15744 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'shiroConfig' of type [com.example.sens.config.shiro.ShiroConfig$$EnhancerBySpringCGLIB$$f4c22029] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-02-25 14:09:08.741  INFO 15744 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'hashedCredentialsMatcher' of type [org.apache.shiro.authc.credential.HashedCredentialsMatcher] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-02-25 14:09:08.751  INFO 15744 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'myRealm' of type [com.example.sens.config.shiro.MyRealm] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-02-25 14:09:08.756  INFO 15744 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'securityManager' of type [org.apache.shiro.web.mgt.DefaultWebSecurityManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-02-25 14:09:08.764  INFO 15744 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'getIgnoredUrlsProperties' of type [com.example.sens.config.properties.IgnoredUrlsProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-02-25 14:09:08.910  WARN 15744 --- [restartedMain] io.undertow.websockets.jsr               : UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2022-02-25 14:09:08.926  INFO 15744 --- [restartedMain] io.undertow.servlet                      : Initializing Spring embedded WebApplicationContext
+2022-02-25 14:09:08.926  INFO 15744 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1350 ms
+2022-02-25 14:09:09.053  INFO 15744 --- [restartedMain] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2022-02-25 14:09:09.133  INFO 15744 --- [restartedMain] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2022-02-25 14:09:09.813  INFO 15744 --- [restartedMain] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService 'taskScheduler'
+2022-02-25 14:09:09.822  WARN 15744 --- [restartedMain] org.thymeleaf.templatemode.TemplateMode  : [THYMELEAF][restartedMain] Template Mode 'HTML5' is deprecated. Using Template Mode 'HTML' instead.
+2022-02-25 14:09:09.996  INFO 15744 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-02-25 14:09:10.036  INFO 15744 --- [restartedMain] org.xnio                                 : XNIO version 3.3.8.Final
+2022-02-25 14:09:10.044  INFO 15744 --- [restartedMain] org.xnio.nio                             : XNIO NIO Implementation Version 3.3.8.Final
+2022-02-25 14:09:10.081  INFO 15744 --- [restartedMain] o.s.b.w.e.u.UndertowServletWebServer     : Undertow started on port(s) 8080 (http) with context path ''
+2022-02-25 14:09:10.082  INFO 15744 --- [restartedMain] com.example.sens.Application             : Started Application in 2.874 seconds (JVM running for 3.89)
+2022-02-25 14:09:10.084  INFO 15744 --- [restartedMain] com.example.sens.Application             : SENS started at http://localhost:8080
+2022-02-25 14:09:45.525  INFO 15744 --- [XNIO-1 task-1] io.undertow.servlet                      : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-02-25 14:09:45.525  INFO 15744 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-02-25 14:09:45.529  INFO 15744 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2022-02-25 14:09:50.158  INFO 15744 --- [XNIO-1 task-20] c.e.s.controller.home.KaptchaController  : wBPy
+2022-02-25 14:10:23.579  INFO 15744 --- [XNIO-1 task-21] com.example.sens.config.shiro.MyRealm    : 认证-->MyShiroRealm.doGetAuthenticationInfo()
+2022-02-25 14:14:49.085  INFO 15744 --- [XNIO-1 task-22] c.e.s.controller.home.KaptchaController  : B4eN
+2022-02-25 14:14:54.147  INFO 15744 --- [XNIO-1 task-31] c.e.s.controller.home.KaptchaController  : MARA
+2022-02-25 14:17:26.776  INFO 15744 --- [XNIO-1 task-7] com.example.sens.config.shiro.MyRealm    : 认证-->MyShiroRealm.doGetAuthenticationInfo()
+2022-02-25 14:17:26.779  INFO 15744 --- [XNIO-1 task-7] com.example.sens.config.shiro.MyRealm    : 用户不存在! 登录名:17110200, 密码:[1, 2, 3, 4, 5, 6]
+2022-02-25 14:17:28.041  INFO 15744 --- [XNIO-1 task-2] c.e.s.controller.home.KaptchaController  : kgvr
+2022-02-25 14:17:36.990  INFO 15744 --- [XNIO-1 task-6] c.e.s.controller.home.KaptchaController  : Er7W
+2022-02-25 14:17:40.421  INFO 15744 --- [XNIO-1 task-3] com.example.sens.config.shiro.MyRealm    : 认证-->MyShiroRealm.doGetAuthenticationInfo()

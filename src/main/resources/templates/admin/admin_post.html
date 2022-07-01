@@ -1,0 +1,207 @@
+<div th:replace="admin/module/_header"></div>
+<div class="wrapper">
+    <!-- 菜单栏模块 -->
+    <div th:replace="admin/module/_sidebar"></div>
+    <div class="content-wrapper">
+        <style type="text/css" rel="stylesheet">
+            .draft, .publish, .trash, .checking {
+                list-style: none;
+                float: left;
+                margin: 0;
+                padding-bottom: 10px
+            }
+
+            #btnNewPost {
+                margin-left: 4px;
+                padding: 3px 6px;
+                position: relative;
+                top: -4px;
+                border: 1px solid #ccc;
+                border-radius: 2px;
+                background: #fff;
+                text-shadow: none;
+                font-weight: 600;
+                font-size: 12px;
+                line-height: normal;
+                color: #3c8dbc;
+                cursor: pointer;
+                transition: all .2s ease-in-out
+            }
+
+            #btnNewPost:hover {
+                background: #3c8dbc;
+                color: #fff
+            }
+
+            .label {
+                background-color: #d6cdcd;
+            }
+
+            .box-body {
+                padding: 0;
+            }
+
+            .box {
+                border-top: 0;
+            }
+        </style>
+        <section class="content-header">
+            <h1 style="display: inline-block;">
+                <span th:if="${type == 'all'}">房屋管理</span>
+                <span th:if="${type == 'rent'}">我正在租赁的房屋</span>
+                <span th:if="${type == 'lease'}">我出租的房屋</span>
+            </h1>
+            <ol class="breadcrumb">
+                <li>
+                    <a data-pjax="true" href="/admin">
+                        <i class="fa fa-dashboard"></i> 首页</a>
+                </li>
+                <li>
+                    <a data-pjax="true" href="#">
+                        <span th:if="${type == 'all'}">房屋管理</span>
+                        <span th:if="${type == 'rent'}">我正在租赁的房屋</span>
+                        <span th:if="${type == 'lease'}">我出租的房屋</span>
+                    </a>
+                </li>
+                <li class="active">房屋列表</li>
+            </ol>
+        </section>
+        <section class="content container-fluid">
+            <div class="row">
+                <div class="col-xs-12" th:if="${type != 'rent'}">
+                    <ul style="list-style: none;padding-left: 0; vertical-align: center">
+                        <li class="publish">
+                            <a data-pjax="true" th:style="${status == -1 ? 'color: #000':''}" href="?status=-1">所有 |&nbsp;</a>
+                        </li>
+                        <li class="publish">
+                            <a data-pjax="true" th:style="${status == 0 ? 'color: #000':''}" href="?status=0">未租出 |&nbsp;</a>
+                        </li>
+                        <li class="draft">
+                            <a data-pjax="true" th:style="${status == 1 ? 'color: #000':''}" href="?status=1">已租出</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-xs-12" th:if="${type != 'rent'}">
+                    <div class="col-md-4 col-xs-12" style="margin-bottom: 10px;padding-left: 0;">
+                        <a class="btn btn-primary" href="/admin/post/new">
+                            <i class="fa fa-plus"></i> 发布新的房屋
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="box box-primary">
+                        <div class="box-body table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th class="col-md-1">发布者</th>
+                                    <th class="col-md-1">出租类型</th>
+                                    <th class="col-md-3">房屋地址</th>
+                                    <th class="col-md-2">门牌号</th>
+                                    <th class="col-md-1">租金</th>
+                                    <th class="col-md-1">押金</th>
+                                    <th class="col-md-1">状态</th>
+                                    <th class="col-md-2">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:id="'post-'+${post.id}" th:each="post : ${posts}">
+                                    <td>
+                                        <a th:href="@{'/admin/user/info?userId='+${post.user.id}}" target="_blank">
+                                            [[${post.user.userDisplayName}]]
+                                        </a>
+                                    </td>
+                                    <td>
+                                        [[${post.category.cateName}]]
+                                    </td>
+                                    <td>
+                                        <a th:href="'/post/'+${post.id}" target="_blank">
+                                            [[${post.postTitle}]]
+                                        </a>
+                                    </td>
+                                    <td>[[${post.number}]]</td>
+                                    <td>
+                                        ¥[[${post.dayPrice}]]/日 <br/>
+                                        ¥[[${post.monthPrice}]]/月
+
+                                    </td>
+                                    <td>
+                                        ¥[[${post.deposit}]]
+                                    </td>
+                                    <td>
+                                        <span th:if="${post.postStatus == 0}" class="text-success">尚未租出</span>
+                                        <span th:if="${post.postStatus == 1}" class="text-warning">租赁成功</span>
+                                    </td>
+                                    <td>
+                                        <a th:href="'/post/'+${post.id}" class="btn btn-primary btn-xs" target="_blank">查看</a>
+                                        <a th:if="${type != 'rent'}" th:href="'/admin/post/edit?id='+${post.id}" class="btn btn-info btn-xs ">编辑</a>
+                                        <button th:if="${type != 'rent'}" class="btn btn-danger btn-xs " th:onclick="'removeIt('+${post.id}+')'">删除</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="box-footer clearfix">
+                            <div class="no-margin pull-left">
+                                第 [[${pageInfo.current}]] / [[${pageInfo.pages}]] 页
+                            </div>
+                            <ul class="pagination no-margin pull-right">
+                                <li><a data-pjax="true" th:classappend="${pageInfo.current == 1 ? 'disabled' : ''}"
+                                       class="btn btn-sm"
+                                       th:href="'?status='+${status}">
+                                    首页
+                                </a>
+                                </li>
+                                <li><a data-pjax="true" class="btn btn-sm"
+                                       th:classappend="${pageInfo.current == 1 ? 'disabled' : ''}"
+                                       th:href="'?status='+${status}+'&page='+${pageInfo.current-1}">
+                                    上一页
+                                </a>
+                                </li>
+                                <li><a data-pjax="true" class="btn btn-sm"
+                                       th:classappend="${pageInfo.current == pageInfo.pages ? 'disabled' : ''}"
+                                       th:href="'?status='+${status}+'&page='+${pageInfo.current+1}">
+                                    下一页
+                                </a>
+                                </li>
+                                <li><a data-pjax="true" class="btn btn-sm"
+                                       th:classappend="${pageInfo.current == pageInfo.pages ? 'disabled' : ''}"
+                                       th:href="'?status='+${status}+'&page='+${pageInfo.pages}">
+                                    尾页
+                                </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <script>
+
+            function removeIt(id) {
+                layer.confirm('请确认是否删除', function (index) {
+                    $.ajax({
+                        type: 'DELETE',
+                        url: '/admin/post/delete',
+                        async: false,
+                        data: {
+                            'id': id
+                        },
+                        success: function (data) {
+                            if (data.code == 0) {
+                                showMsg(data.msg, "error", 1000);
+                            } else {
+                                showMsgAndReload(data.msg, "success", 2000);
+                            }
+                        }
+                    });
+                    layer.close(index);
+                });
+            }
+
+
+        </script>
+    </div>
+</div>
+<div th:replace="admin/module/_footer"></div>

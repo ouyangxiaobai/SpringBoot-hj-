@@ -1,0 +1,240 @@
+<div th:replace="admin/module/_header"></div>
+<div class="wrapper">
+    <!-- 菜单栏模块 -->
+    <div th:replace="admin/module/_sidebar"></div>
+    <div class="content-wrapper">
+        <style type="text/css" rel="stylesheet">
+            button {
+                margin-top: 2px;
+            }
+
+            .box-body {
+                padding: 0;
+            }
+
+            .box {
+                border-top: 0;
+            }
+        </style>
+        <section class="content-header">
+            <h1 style="display: inline-block;">订单管理</h1>
+            <ol class="breadcrumb">
+                <li>
+                    <a data-pjax="true" href="/admin">
+                        <i class="fa fa-dashboard"></i> 首页</a>
+                </li>
+                <li><a data-pjax="true" href="#">订单管理</a></li>
+                <li class="active">订单列表</li>
+            </ol>
+        </section>
+        <section class="content container-fluid">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-primary">
+                        <div class="box-body table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th class="col-md-2">租赁关系</th>
+                                    <th class="col-md-2">房屋</th>
+                                    <th class="col-md-2">有效时间-金额</th>
+                                    <th class="col-md-1">订单状态</th>
+                                    <th class="col-md-2">提前退租状态</th>
+                                    <th class="col-md-2">操作</th>
+                                    <th class="col-md-1">ID</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:id="'order-'+${order.id}" th:each="order : ${orders}">
+                                    <td>
+                                        <a th:href="'/post/'+${order.postId}" target="_blank">[[${order.post.postTitle}]]-[[${order.post.number}]]</a>
+                                    </td>
+                                    <td>
+
+                                        租客：<a th:href="'/admin/user/info?userId='+${order.user.id}" target="_blank">[[${order.user.userDisplayName}]]</a>
+                                        <br>
+                                        <span th:text="${order.post.agencyFlag?'中介':'房东'}"></span>：<a
+                                            th:href="'/admin/user/info?userId='+${order.ownerUser.id}"
+                                            target="_blank">[[${order.ownerUser.userDisplayName}]]</a> <br/>
+                                        <span th:if="${order.post.agencyFlag}">房东：[[${order.post.ownerName}]]-[[${order.post.ownerPhone}]]</span>
+                                    </td>
+                                    <td>
+                                        入住时间：<span th:text="${#dates.format(order.startDate,'yyyy-MM-dd')}"></span>
+                                        <br/>
+                                        到期时间：<span th:text="${#dates.format(order.endDate,'yyyy-MM-dd')}"></span> <br/>
+                                        总租金 ¥[[${order.totalAmount+order.deposit}]] <br/>
+                                        押金 ¥[[${order.deposit}]]
+                                    </td>
+                                    <td>
+                                        <!--     -1已取消，0待支付，1已支付，2已退租-->
+                                        <span th:if="${order.status == -1}" class="text-warning">已取消</span>
+                                        <span th:if="${order.status == 0}" class="text-info">待支付</span>
+                                        <span th:if="${order.status == 1}" class="text-success">合同生效</span>
+                                        <span th:if="${order.status == 2}" class="text-danger">已退租</span>
+                                    </td>
+                                    <td>
+                                        <span th:if="${order.offLeaseDate != null}">
+                                            申请退租时间：[[${#dates.format(order.offLeaseDate,'yyyy-MM-dd')}]] <br/>
+                                        </span>
+                                        <!--    -1驳回，0待审核，1通过-->
+                                        <span th:if="${order.offLeaseStatus == -1}" class="text-warning">退租申请驳回</span>
+                                        <span th:if="${order.offLeaseStatus == 0}" class="text-info">退租申请待审核</span>
+                                        <span th:if="${order.offLeaseStatus == 1 }" class="text-success">退租完成，已退租金[[${order.offLeasePrice}]]，押金[[${order.deposit}]]</span>
+                                    </td>
+
+                                    <td>
+                                        <a th:href="'/order/agreement?orderId='+${order.id}"
+                                           class="btn btn-primary btn-xs" target="_blank">电子合同</a>
+
+                                        <a th:href="'/pay?orderId='+${order.id}"
+                                           th:if="${type == 'rent' && order.status == 0}" class="btn btn-warning btn-xs"
+                                           target="_blank">支付</a>
+
+                                        <button th:if="${order.status == 1 && (order.offLeaseStatus == null || order.offLeaseStatus == -1)}"
+                                                class="btn btn-info btn-xs"
+                                                th:onclick="'offLeaseApply('+${order.id}+')'">退租申请
+                                        </button>
+
+                                        <button th:if="${hasCheckRole && order.status == 1 && order.offLeaseStatus == 0}"
+                                                class="btn btn-success btn-xs"
+                                                th:onclick="'offLeaseApplyPass('+${order.id}+')'">退租审核通过
+                                        </button>
+
+                                        <button th:if="${hasCheckRole && order.status == 1 && order.offLeaseStatus == 0}"
+                                                class="btn btn-warning btn-xs"
+                                                th:onclick="'offLeaseApplyReject('+${order.id}+')'">退租审核拒绝
+                                        </button>
+
+                                        <button th:if="${order.status == 0}" class="btn btn-danger btn-xs"
+                                                th:onclick="'cancelIt('+${order.id}+')'">取消
+                                        </button>
+
+                                    </td>
+                                    <td>[[${order.id}]]</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="box-footer clearfix">
+                            <div class="no-margin pull-left">
+                                第 [[${pageInfo.current}]] / [[${pageInfo.pages}]] 页
+                            </div>
+                            <ul class="pagination no-margin pull-right">
+                                <li><a data-pjax="true" th:classappend="${pageInfo.current == 1 ? 'disabled' : ''}"
+                                       class="btn btn-sm"
+                                       href="">
+                                    首页
+                                </a>
+                                </li>
+                                <li><a data-pjax="true" class="btn btn-sm"
+                                       th:classappend="${pageInfo.current == 1 ? 'disabled' : ''}"
+                                       th:href="'?page='+${pageInfo.current-1}">
+                                    上一页
+                                </a>
+                                </li>
+                                <li><a data-pjax="true" class="btn btn-sm"
+                                       th:classappend="${pageInfo.current == pageInfo.pages ? 'disabled' : ''}"
+                                       th:href="'?page='+${pageInfo.current+1}">
+                                    下一页
+                                </a>
+                                </li>
+                                <li><a data-pjax="true" class="btn btn-sm"
+                                       th:classappend="${pageInfo.current == pageInfo.pages ? 'disabled' : ''}"
+                                       th:href="'?page='+${pageInfo.pages}">
+                                    尾页
+                                </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <script>
+
+
+            function cancelIt(id) {
+                layer.confirm('请确认是否取消订单', function (index) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/admin/order/cancel',
+                        async: false,
+                        data: {
+                            'id': id
+                        },
+                        success: function (data) {
+                            if (data.code == 0) {
+                                showMsg(data.msg, "error", 1000);
+                            } else {
+                                showMsgAndReload(data.msg, "success", 2000);
+                            }
+                        }
+                    });
+                    layer.close(index);
+                });
+            }
+
+            function offLeaseApply(id) {
+                layer.confirm('请确认是否申请退租', function (index) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/admin/order/offLeaseApply',
+                        async: false,
+                        data: {
+                            'id': id
+                        },
+                        success: function (data) {
+                            if (data.code == 0) {
+                                showMsg(data.msg, "error", 1000);
+                            } else {
+                                showMsgAndReload(data.msg, "success", 2000);
+                            }
+                        }
+                    });
+                    layer.close(index);
+                });
+            }
+
+
+            function offLeaseApplyPass(id) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/order/offLeaseApplyPass',
+                    async: false,
+                    data: {
+                        'id': id
+                    },
+                    success: function (data) {
+                        if (data.code == 0) {
+                            showMsg(data.msg, "error", 1000);
+                        } else {
+                            showMsgAndReload(data.msg, "success", 2000);
+                        }
+                    }
+                });
+            }
+
+            function offLeaseApplyReject(id) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/order/offLeaseApplyReject',
+                    async: false,
+                    data: {
+                        'id': id
+                    },
+                    success: function (data) {
+                        if (data.code == 0) {
+                            showMsg(data.msg, "error", 1000);
+                        } else {
+                            showMsgAndReload(data.msg, "success", 2000);
+                        }
+                    }
+                });
+            }
+
+
+        </script>
+    </div>
+</div>
+<div th:replace="admin/module/_footer"></div>

@@ -1,0 +1,90 @@
+<div th:replace="admin/module/_header"></div>
+<div class="wrapper">
+    <div th:replace="admin/module/_sidebar"></div>
+
+    <div class="content-wrapper">
+        <style>
+            .form-horizontal .control-label {
+                text-align: left;
+            }
+        </style>
+        <section class="content-header">
+            <h1>
+                用户信息
+                <small></small>
+            </h1>
+            <ol class="breadcrumb">
+                <li>
+                    <a data-pjax="true" href="/admin">
+                        <i class="fa fa-dashboard"></i> 首页</a>
+                </li>
+                <li><a data-pjax="true" href="#">用户管理</a></li>
+                <li class="active">用户信息</li>
+            </ol>
+        </section>
+        <!-- tab选项卡 -->
+        <section class="content container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="nav-tabs-custom">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="general">
+                                <form method="post" class="form-horizontal" id="profileForm">
+                                    <div class="box-body">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-sm-4 control-label">照片</label>
+                                            <div class="col-lg-4 col-sm-8">
+                                                <img th:src="${user.userAvatar}" style="width: 200px;" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-sm-4 control-label">账号</label>
+                                            <div class="col-lg-4 col-sm-8">
+                                                <span th:text="${user.userName}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-sm-4 control-label">姓名</span>
+                                            </label>
+                                            <div class="col-lg-4 col-sm-8">
+                                                <span th:text="${user.userDisplayName}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-sm-4 control-label">身份证号码</label>
+                                            <div class="col-lg-4 col-sm-8">
+                                                <span th:text="${user.idCard}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-sm-4 control-label">手机号</label>
+                                            <div class="col-lg-4 col-sm-8">
+                                                <span th:text="${user.phone}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-sm-4 control-label">电子邮箱</label>
+                                            <div class="col-lg-4 col-sm-8">
+                                                <span th:text="${user.email}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label
+                                                    class="col-lg-2 col-sm-4 control-label">个人描述
+                                            </label>
+                                            <div class="col-lg-4 col-sm-8">
+                                                <span th:text="${user.userDesc}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<div th:replace="admin/module/_footer"></div>
+

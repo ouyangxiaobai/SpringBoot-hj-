@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="Webartinfo">
+        <meta name="author" content="Webartinfo">
+        <title>系统 - 用户注册</title>
+        <!-- Favicon Icon -->
+        <link rel="icon" type="image/png" href="/static/front/img/favicon.png">
+        <!-- Bootstrap core CSS -->
+        <link href="/static/front/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Material Design Icons -->
+        <link href="/static/front/vendor/icons/css/materialdesignicons.min.css" media="all" rel="stylesheet"
+              type="text/css"/>
+        <!-- Select2 CSS -->
+        <link href="/static/front/vendor/select2/css/select2-bootstrap.css"/>
+        <link href="/static/front/vendor/select2/css/select2.min.css" rel="stylesheet"/>
+        <!-- Custom styles for this template -->
+        <link href="/static/front/css/style.css" rel="stylesheet">
+    </head>
+    <body>
+        <!-- Register -->
+        <section class="hv-100">
+            <div class="container">
+                <div class="row align-items-center hv-100">
+                    <div class="col-lg-5 col-md-5 mx-auto">
+                        <div class="card padding-card mb-0">
+                            <div class="card-body">
+                                <h5 class="card-title mb-4">海景房出租管理系统-用户注册</h5>
+                                <form action="" id="registerForm">
+                                    <div class="form-group">
+                                        <label>账号 <span class="text-danger">*</span></label>
+                                        <input type="text" name="userName" id="userName" class="form-control"
+                                               placeholder="请输入账号">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>密码 <span class="text-danger">*</span></label>
+                                        <input type="password" name="userPass" id="userPass" class="form-control"
+                                               placeholder="请输入密码">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>姓名 <span class="text-danger">*</span></label>
+                                        <input type="text" name="userDisplayName" id="userDisplayName"
+                                               class="form-control" placeholder="请输入真实姓名">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>身份证号码 <span class="text-danger">*</span></label>
+                                        <input type="text" name="idCard" id="idCard" class="form-control"
+                                               placeholder="请输入身份证号码">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>角色 <span class="text-danger">*</span></label> <br>
+                                        <input type="radio" name="role" value="customer" checked>租客&nbsp;&nbsp;&nbsp;
+                                        <input type="radio" name="role" value="owner" >房东 &nbsp;&nbsp;
+                                        <input type="radio" name="role" value="agency">中介
+                                    </div>
+                                    <div class="form-group">
+                                        <label>验证码 <span class="text-danger">*</span></label> <br>
+
+                                        <input type="text" class="form-control pull-left margin-r-5" name="kaptcha" id="kaptcha"
+                                               style="width: 50%; float: left;"
+                                               placeholder="验证码">
+                                        <img th:src="@{/getKaptchaImage}" width="80" height="34"
+                                             class="captcha changeCaptcha pull-left margin-r-5" style="margin-left: 5px;" alt="验证码"/>
+                                        <a href="javascript:void(0)" class="changeCaptcha">换一张</a>
+                                        <div class="clear"></div>
+                                    </div>
+                                    <button type="button" id="btn-register" class="btn btn-success btn-block">注册
+                                    </button>
+                                </form>
+                                <div class="mt-4 text-center">
+                                    已经有账号了 - <a href="/login">登录</a> | <a href="/">返回前台</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End Register -->
+        <!-- Bootstrap core JavaScript -->
+        <script src="/static/front/vendor/jquery/jquery.min.js"></script>
+        <script src="/static/front/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Contact form JavaScript -->
+        <!-- Do not edit these files! In order to set the email address and subject line for the contact form go to the bin/contact_me.php file. -->
+        <script src="/static/front/js/jqBootstrapValidation.js"></script>
+        <script src="/static/front/js/contact_me.js"></script>
+        <!-- select2 Js -->
+        <script src="/static/front/vendor/select2/js/select2.min.js"></script>
+        <!-- Custom -->
+        <script src="/static/front/js/custom.js?v=4.0"></script>
+    </body>
+</html>

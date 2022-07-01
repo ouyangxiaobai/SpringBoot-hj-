@@ -1,0 +1,302 @@
+<div th:replace="admin/module/_header"></div>
+<div class="wrapper">
+    <!-- 菜单栏模块 -->
+    <div th:replace="admin/module/_sidebar"></div>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+
+        <style type="text/css">
+            #cateId option {
+                border-radius: 0;
+            }
+
+            .form-horizontal .control-label {
+                text-align: left;
+            }
+
+            .editor-preview-active img, .editor-preview-active-side img {
+                width: 100%;
+            }
+
+            .fr-toolbar {
+                border-top: 1px solid #ccc !important;
+            }
+
+            .fr-wrapper > div[style*='z-index: 9999'] {
+                position: absolute;
+                top: -10000px;
+                opacity: 0;
+                height: 0;
+            }
+
+            .fr-view img.fr-dib {
+                margin: 5px !important;
+                width: 400px !important;
+                height: 200px !important;
+            }
+        </style>
+        <section class="content-header">
+            <h1 style="display: inline-block;">房屋修改</h1>
+            <ol class="breadcrumb">
+                <li>
+                    <a data-pjax="true" href="#"><i
+                            class="fa fa-dashboard"></i> 首页</a>
+                </li>
+                <li>
+                    <a data-pjax="true" href="#">房屋管理</a>
+                </li>
+                <li class="active">房屋修改</li>
+            </ol>
+        </section>
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="box box-primary">
+                        <!-- form start -->
+
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <input type="hidden" id="postId" th:value="${post.id}">
+                                    <div class="form-group">
+                                        <label for="cityId">所属城市</label>
+                                        <select class="form-control  input-lg" id="cityId" disabled>
+                                            <option th:each="c : ${cities}" th:value="${c.id}" th:selected="${c.id == post.cityId}">[[${c.cityName}]]
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="postTitle">房屋地址</label>
+                                        <input type="text" class="form-control input-lg" id="postTitle" disabled
+                                               placeholder="请输入房屋地址(如南山区西丽镇茶光小区)"  th:value="${post.postTitle}">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="number">门牌号</label>
+                                        <input type="text" class="form-control input-lg" id="number" disabled
+                                               placeholder="门牌号(如10栋3单元305室)"  th:value="${post.number}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="cateId">房屋类型</label>
+                                        <select class="form-control  input-lg" id="cateId" disabled>
+                                            <option th:each="c : ${categories}" th:value="${c.id}">[[${c.cateName}]]
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="roomCount">面积，单位m²</label>
+                                        <input type="number" class="form-control input-lg col-md-3" id="area"
+                                               placeholder="房屋面积，单位m²" th:value="${post.area}" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="toiletCount">租金/月，单位元</label>
+                                        <input type="number" class="form-control input-lg" id="dayPrice"
+                                               placeholder="月租价格" th:value="${post.dayPrice}" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="toiletCount">押金，单位元</label>
+                                        <input type="number" class="form-control input-lg" id="deposit"
+                                               placeholder="押金" th:value="${post.deposit}" disabled>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="roomCount">房间数量</label>
+                                        <select class="form-control input-lg" id="roomCount" disabled>
+                                            <option value="1" th:selected="${1 == post.roomCount}">1个</option>
+                                            <option value="2" th:selected="${2 == post.roomCount}">2个</option>
+                                            <option value="3" th:selected="${3 == post.roomCount}" >3个</option>
+                                            <option value="4" th:selected="${4 == post.roomCount}">4个</option>
+                                            <option value="5" th:selected="${5 == post.roomCount}">5个</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="toiletCount">洗手间数量</label>
+                                        <select class="form-control  input-lg" id="toiletCount" disabled>
+                                            <option value="0" th:selected="${0 == post.toiletCount}">0个</option>
+                                            <option value="1" th:selected="${1 == post.toiletCount}">1个</option>
+                                            <option value="2" th:selected="${2 == post.toiletCount}">2个</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <label for="postThumbnail">缩略图</label>
+                                            <input id='postThumbnail' name="postThumbnail" placeholder="缩略图"
+                                                   class="form-control input-lg" th:value="${post.postThumbnail}"
+                                                   onclick="$('#postThumbnailFile').click();">
+                                            <label class="input-group-btn">
+                                                <input type="button" id="i-check" value="上传缩略图"
+                                                       style="border-radius: 0; border-left: 0;margin-top: 24px;"
+                                                       class="btn btn-info btn-lg"
+                                                       onclick="$('#postThumbnailFile').click();">
+                                            </label>
+                                            <input type="file" id="postThumbnailFile" accept=".png, .jpg, .jpeg"
+                                                   style="display: none">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="postContent">房屋描述信息</label>
+                                <div class="form-group" id='postContent' th:utext="${post.postContent}">请详细描述房屋信息</div>
+                            </div>
+
+                            <label for="edit">房屋图片合集</label>
+                            <div class="form-group" id='edit' th:utext="${post.postEditor}">房屋图片</div>
+
+                            <shiro:hasRole name="agency">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="ownerName">房东姓名</label>
+                                            <input type="text" class="form-control input-lg" id="ownerName" th:value="${post.ownerName}"
+                                                   placeholder="请填写房东姓名">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="ownerPhone">房东联系方式</label>
+                                            <input type="text" class="form-control input-lg" id="ownerPhone" th:value="${post.ownerPhone}"
+                                                   placeholder="请填写房东真实联系方式">
+                                        </div>
+                                    </div>
+                                </div>
+                            </shiro:hasRole>
+
+                        </div>
+                        <!-- /.box-body -->
+
+                        <div class="box-footer">
+                            <button type="button" class="btn btn-primary" onclick="push(0)">修改</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        <script>
+
+            //页面加载完成后再执行
+            $(function () {
+                $('#postContent').froalaEditor({
+                    heightMin: 300,
+                    heightMax: 1000,
+                    placeholderText: '',
+                    pastePlain: true,
+                    theme: 'gray',
+                    fontFamilySelection: true,
+                    fontSizeSelection: true,
+                    paragraphFormatSelection: true,
+                    toolbarButtons: ['paragraphFormat', 'bold', 'italic', 'underline', 'strikeThrough', 'quote', 'insertLink', 'emoticons', 'insertImage', 'insertVideo', 'embedly', 'insertFile', 'insertTable',
+                        'align', 'formatOL', 'formatUL', 'fullscreen'],
+                    imageAllowedTypes: ['jpg', 'gif', 'png', 'jpeg', 'svg', 'psd'],
+                    imageDefaultWidth: 100,
+                    imageInsertButtons: ['imageBack', '|', 'imageUpload', 'imageByURL'],
+                    imageUploadURL: '/admin/file/upload',
+                    imageManagerLoadURL: '/admin/file/upload',
+                    imageManagerLoadMethod: "GET",
+                    imageManagerPageSize: 4,
+                    imageManagerScrollOffset: 20,
+                    fileUploadURL: '/admin/file/upload',
+                    videoUploadURL: '/admin/file/upload',
+                    imagePaste: true,
+                    imageMove: true,
+                    pastePlain: true,
+                    fileMaxSize: 1024 * 1024 * 2000,
+                    toolbarStickyOffset: 50,
+                    tableResizer: true,
+                    language: 'zh_cn'
+                });
+
+            });
+
+            //页面加载完成后再执行
+            $(function () {
+                $('#edit').froalaEditor({
+                    heightMin: 300,
+                    heightMax: 1000,
+                    placeholderText: '',
+                    pastePlain: true,
+                    theme: 'gray',
+                    fontFamilySelection: true,
+                    fontSizeSelection: true,
+                    paragraphFormatSelection: true,
+                    toolbarButtons: ['insertImage'],
+                    imageAllowedTypes: ['jpg', 'gif', 'png', 'jpeg', 'svg', 'psd'],
+                    imageDefaultWidth: 100,
+                    imageInsertButtons: ['imageBack', '|', 'imageUpload', 'imageByURL'],
+                    imageUploadURL: '/admin/file/upload',
+                    imageManagerLoadURL: '/admin/file/upload',
+                    imageManagerLoadMethod: "GET",
+                    imageManagerPageSize: 4,
+                    imageManagerScrollOffset: 20,
+                    fileUploadURL: '/admin/file/upload',
+                    videoUploadURL: '/admin/file/upload',
+                    imagePaste: true,
+                    imageMove: true,
+                    pastePlain: true,
+                    fileMaxSize: 1024 * 1024 * 2000,
+                    toolbarStickyOffset: 50,
+                    tableResizer: true,
+                    language: 'zh_cn'
+                });
+
+            });
+
+            /**
+             * 上传缩略图
+             */
+            $('body').on('change', '#postThumbnailFile', function () {
+                var formData = new FormData();
+                var files = $($(this))[0].files[0];
+                formData.append("file", files);
+                $.ajax({
+                    url: '/admin/file/upload',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log(data);
+                        $('#postThumbnail').val(data.link);
+                        // alert('上传成功');
+                    }
+                    , error: function (res) {
+                        // alert('错误');
+                    }
+                });
+            })
+
+
+        </script>
+    </div>
+
+</div>
+<div th:replace="admin/module/_footer"></div>
